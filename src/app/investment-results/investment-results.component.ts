@@ -8,5 +8,5 @@ import type { InvestmentResult } from '../investment-input.model';
   styleUrl: './investment-results.component.css',
 })
 export class InvestmentResultsComponent {
-  @Input({ required: true }) investmentResuts?: InvestmentResult[];
+  @Input({ required: true }) investmentResults?: InvestmentResult[];
 }
