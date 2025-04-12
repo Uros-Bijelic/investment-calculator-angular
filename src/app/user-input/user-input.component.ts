@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InvestmentData } from '../investment-input.model';
 
@@ -10,21 +10,24 @@ import { InvestmentData } from '../investment-input.model';
   imports: [FormsModule],
 })
 export class UserInputComponent {
-  initialInvestment = 0;
-  annualInvestment = 0;
-  expectedReturn = 0;
-  duration = 0;
+  initialInvestment = signal(0);
+  annualInvestment = signal(0);
+  expectedReturn = signal(0);
+  duration = signal(0);
 
-  @Output() calculateResult = new EventEmitter<InvestmentData>();
+  calculateResult = output<InvestmentData>();
 
   onSubmit() {
-    const data = {
-      initialInvestment: this.initialInvestment,
-      annualInvestment: this.annualInvestment,
-      expectedReturn: this.expectedReturn,
-      duration: this.duration,
-    };
-    console.log('form submitted', data);
-    this.calculateResult.emit(data);
+    this.calculateResult.emit({
+      initialInvestment: this.initialInvestment(),
+      annualInvestment: this.annualInvestment(),
+      expectedReturn: this.expectedReturn(),
+      duration: this.duration(),
+    });
+
+    this.initialInvestment.set(0);
+    this.annualInvestment.set(0);
+    this.expectedReturn.set(0);
+    this.duration.set(0);
   }
 }
